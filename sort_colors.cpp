@@ -5,25 +5,29 @@ using namespace std;
 class Solution {
 public:
   void sortColors(vector<int> &nums) {
-    int p1, p2, p3;
     int n = nums.size();
-    while (p1 < n && nums[p1] == 0)
-      p1++;
-
-    for (int i = p1 + 1; i < n; i++) {
-      if (nums[i] == 0) {
-        swap(nums[i], nums[p1]);
-        p1++;
-      }
+    int p0 = 0;
+    int p2 = n - 1;
+    while (p0 < n && nums[p0] == 0) {
+      p0++;
     }
-
-    while (p1 < n && nums[p1] == 1)
-      p1++;
-
-    for (int i = p1 + 1; i < n; i++) {
-      if (nums[i] == 1) {
-        swap(nums[i], nums[p1]);
-        p1++;
+    while (p2 >= 0 && nums[p2] == 2) {
+      p2--;
+    }
+    // p0 points to first non 0 from left
+    // p2 points to first non 2 from right
+    for (int i = p0; i <= p2; i++) {
+      if (nums[i] == 0) {
+        swap(nums[p0], nums[i]);
+        p0++;
+      } else if (nums[i] == 2) {
+        swap(nums[p2], nums[i]);
+        while (p2 >= 0 && nums[p2] == 2)
+          p2--;
+        if (nums[i] == 0) {
+          swap(nums[p0], nums[i]);
+          p0++;
+        }
       }
     }
   }
